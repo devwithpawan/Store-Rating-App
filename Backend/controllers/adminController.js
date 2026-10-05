@@ -114,17 +114,6 @@ const createUser = async (req, res) => {
                     "Name must be between 20 and 60 characters",
             });
         }
-
-        // const passwordRegex =
-        //     /^(?=.[A-Z])(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,16}$/;
-
-        // if (!passwordRegex.test(password)) {
-        //     return res.status(400).json({
-        //         message:
-        //             "Password must be 8-16 characters with uppercase and special character",
-        //     });
-        // }
-
         const [existingUser] = await db
             .promise()
             .query(
@@ -194,11 +183,6 @@ const getStores = async (req, res) => {
                 ? "DESC"
                 : "ASC";
 
-        // const sortOrder =
-        //     order.toUpperCase() === "DESC"
-        //         ? "DESC"
-        //         : "ASC";
-
         const query = `SELECT
         s.id,
         s.name,
@@ -256,14 +240,6 @@ const createStore = async (req, res) => {
                 message: "Name, email and address and owner are required",
             });
         }
-
-        //check owner exists and is actually an OWNER
-        // const [owners] = await db.promise().query(
-        //     `SELECT id FROM users
-        //     WHERE id = ? AND role = "OWNER"`
-        //     [ownerId]
-        // );
-
         if (name.length < 20 || name.length > 60) {
             return res.status(400).json({
                 message:
