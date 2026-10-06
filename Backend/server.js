@@ -27,8 +27,6 @@ app.get('/', (req, res) => {
     res.send("Store rating API is running")
 })
 
-// db();
-
 //user routes
 app.use("/api/admin", adminRoutes)
 app.use("/api/auth", authRoutes)
@@ -41,4 +39,3 @@ app.use("/api", userRoutes)
 app.listen(port, ()=> {
     console.log("port is listining at:", port)
 })
-

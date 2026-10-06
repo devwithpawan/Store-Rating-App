@@ -1,8 +1,6 @@
 import db from "../config/db.js";
 
-// =============================
 // CREATE RATING
-// =============================
 export const createRating = (req, res) => {
     const userId = req.user.id;
     const { storeId, rating } = req.body;
@@ -74,9 +72,7 @@ export const createRating = (req, res) => {
 };
 
 
-// =============================
 // UPDATE RATING
-// =============================
 export const updateRating = (req, res) => {
     const userId = req.user.id;
     const { storeId } = req.params;

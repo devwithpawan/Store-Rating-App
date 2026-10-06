@@ -1,55 +1,6 @@
 
 import db from "../config/db.js"
 
-// GET ALL STORES
-// const getStores = async (req, res) => {
-//     try {
-//         const {
-//             name = "",
-//             address = "",
-//         } = req.query;
-
-//         const query = `
-//       SELECT
-//         s.id,
-//         s.name,
-//         s.address,
-//         COALESCE(AVG(r.rating), 0) AS overallRating,
-//         ur.rating AS userRating
-//       FROM stores s
-
-//       LEFT JOIN ratings r
-//         ON s.id = r.store_id
-
-//       LEFT JOIN ratings ur
-//         ON s.id = ur.store_id
-//         AND ur.user_id = ?
-
-//       WHERE s.name LIKE ?
-//       AND s.address LIKE ?
-
-//       GROUP BY s.id, ur.rating
-//       ORDER BY s.name ASC
-//     `;
-
-//         const [stores] = await db
-//             .promise()
-//             .query(query, [
-//                 req.user.id,
-//                 `%${name} %`,
-//                 `%${address} %`,
-//             ]);
-
-//         res.status(200).json(stores);
-//     } catch (error) {
-//         console.error(error);
-
-//         res.status(500).json({
-//             message: "Failed to load stores",
-//         });
-//     }
-// };
-
 const getStores = async (req, res) => {
     try {
         const {
@@ -60,36 +11,22 @@ const getStores = async (req, res) => {
         const userId = req.user.id;
 
         const query = `
-            SELECT
-                s.id,
-                s.name,
-                s.address,
-
-                COALESCE(
-                    AVG(r.rating),
-                    0
-                ) AS average_rating,
-
+            SELECT s.id, s.name, s.address,
+                COALESCE( AVG(r.rating), 0) AS average_rating,
                 ur.rating AS my_rating
-
             FROM stores s
-
             LEFT JOIN ratings r
                 ON s.id = r.store_id
-
             LEFT JOIN ratings ur
                 ON s.id = ur.store_id
                 AND ur.user_id = ?
-
             WHERE s.name LIKE ?
             AND s.address LIKE ?
-
             GROUP BY
                 s.id,
                 s.name,
                 s.address,
                 ur.rating
-
             ORDER BY s.name ASC
         `;
 
